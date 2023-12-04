@@ -2,15 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mybookshelf/home.dart';
-import 'package:mybookshelf/reservationsView.dart';
-import 'package:mybookshelf/support.dart';
-import 'package:mybookshelf/userReservationsView.dart';
-import 'package:mybookshelf/utils/utils.dart';
-
-import 'BookUpload.dart';
-import 'about.dart';
 import 'locationView.dart';
-import 'login.dart';
 
 class BookDetailView extends StatelessWidget {
   final DocumentSnapshot document;

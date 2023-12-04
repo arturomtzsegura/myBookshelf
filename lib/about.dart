@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mybookshelf/home.dart';
-import 'package:mybookshelf/reservationsView.dart';
-import 'package:mybookshelf/support.dart';
-import 'package:mybookshelf/userReservationsView.dart';
-import 'package:mybookshelf/utils/utils.dart';
-import 'login.dart';
 
 class about extends StatefulWidget {
   const about({super.key});

@@ -14,7 +14,6 @@ class _register_scrState extends State<register_scr> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rePass = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
