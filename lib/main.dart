@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mybookshelf/BookUpload.dart';
+import 'package:mybookshelf/about.dart';
 import 'package:mybookshelf/firstscr.dart';
 import 'package:mybookshelf/home.dart';
 import 'package:mybookshelf/login.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: login(),
+      home: firstscr(),
     );
   }
 }

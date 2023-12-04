@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:mybookshelf/register_scr.dart';
 import 'login.dart';
-
 
 class firstscr extends StatefulWidget {
   const firstscr({super.key});
@@ -15,69 +16,93 @@ class _homeState extends State<firstscr> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-
-      ),
-      body: Container(/*
+      body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/bulb.jpg"),
+            image: AssetImage("assets/firstscreenimg.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        */
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.3,
+        child: Column( // Change Center to Column
+          mainAxisAlignment: MainAxisAlignment.center, // To keep the content in center
+          children: [
+            SizedBox(
+              height: size.height * 0.1,
+            ),
+            const Text('MyBookshelf',
+              style: TextStyle(
+                fontSize: 40,
               ),
-              const Text('MyBookshelf',
-                style: TextStyle(
-                  fontSize: 40,
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.4,
-              ),
-              Row(
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        FittedBox(
-                          child: ElevatedButton(
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const login()));
-                            },
-                            child: const Text('Login'),
-                          ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            FittedBox(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.brown, // text color
+                                  elevation: 0, // remove shadow
+                                  shape: RoundedRectangleBorder( // rounded corners
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const login()));
+                                },
+                                child: const Text('Login',
+                                  style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        FittedBox(
-                          child: ElevatedButton(
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const register_scr()));
-                            },
-                            child: const Text('Register'),
-                          ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            FittedBox(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.brown, // text color
+                                  elevation: 0, // remove shadow
+                                  shape: RoundedRectangleBorder( // rounded corners
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const register_scr()));
+                                },
+                                child: const Text('Register',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-
                 ],
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
       ),
     );
   }

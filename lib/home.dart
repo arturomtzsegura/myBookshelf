@@ -1,8 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mybookshelf/BookUpload.dart';
+import 'package:mybookshelf/login.dart';
 import 'package:mybookshelf/reservationsView.dart';
+import 'package:mybookshelf/support.dart';
 import 'package:mybookshelf/userReservationsView.dart';
+import 'package:mybookshelf/utils/utils.dart';
+
+import 'about.dart';
+import 'bookDetails.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -14,27 +21,13 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   final CollectionReference bookCollection = FirebaseFirestore.instance.collection('books');
 
-  final CollectionReference reservationCollection = FirebaseFirestore.instance.collection('reservations');
-
-  Future<void> requestBookReservation(String title) {
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-    return reservationCollection
-        .add({
-      'title': title,
-      'userId': userId,
-      'timestamp': DateTime.now(),
-      'status': 'requested', // Add a status field
-    })
-        .then((value) => print("Reservation Requested"))
-        .catchError((error) => print("Failed to request reservation: $error"));
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown,
       appBar: AppBar(
         title: Text('Books'),
+        backgroundColor: Colors.brown,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: bookCollection.snapshots(),
@@ -48,49 +41,49 @@ class _homeState extends State<home> {
           }
 
           return GridView.count(
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-              return Card(
-                elevation: 1,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Container(
-                      width: 500,
-                      height: 500,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(data['imageUrl']),
-                          fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookDetailView(document: document),
+                    ),
+                  );
+                },
+                child: Card(
+                  elevation: 1,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                        width: 500,
+                        height: 500,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(data['imageUrl']),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 16,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                        ),
-                        onPressed: () => requestBookReservation(data['title']),
-                        child: const Text('Reserve'),
-                      ),
-                    ),
-                  ],
+
+                    ],
+                  ),
                 ),
               );
             }).toList(),
           );
-
         },
       ),
       drawer: Drawer(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.brown,
         child: ListView(
           children: [
             DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blueAccent,
+                  color: Colors.brown,
                 ),
                 child: Row(
                   children: [
@@ -98,49 +91,52 @@ class _homeState extends State<home> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.person, color: Colors.black, size: 50,),
+                      icon: Icon(Icons.person, color: Colors.white, size: 50,),
                     ),
                   ],
                 )
             ),
             ListTile(
-              leading: Icon(Icons.collections_bookmark, color: Colors.black,),
+              leading: Icon(Icons.collections_bookmark, color: Colors.white,),
               title: Text('Book lending',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => UserReservationsView()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.checklist_rtl, color: Colors.black,),
+              leading: Icon(Icons.checklist_rtl, color: Colors.white,),
               title: Text('Book requests',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ReservationsView()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.info, color: Colors.black,),
+              leading: Icon(Icons.info, color: Colors.white,),
               title: Text('About app',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => about()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.support_agent, color: Colors.black,),
+              leading: Icon(Icons.support_agent, color: Colors.white,),
               title: Text('Support',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => support()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.output, color: Colors.black,),
+              leading: Icon(Icons.output, color: Colors.white,),
               title: Text('Log out',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: () {
-
+                Utils.closeSession();
+                final snackBar = SnackBar(content: Text('Sesion cerrada'));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => login()));
               },
             ),
           ],

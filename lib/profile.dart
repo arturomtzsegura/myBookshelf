@@ -37,47 +37,47 @@ class _profileState extends State<profile> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.person, color: Colors.black, size: 50,),
+                      icon: Icon(Icons.person, color: Colors.white, size: 50,),
                     ),
                   ],
                 )
             ),
             ListTile(
-              leading: Icon(Icons.collections_bookmark, color: Colors.black,),
+              leading: Icon(Icons.collections_bookmark, color: Colors.white,),
               title: Text('Book lending',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
 
               },
             ),
             ListTile(
-              leading: Icon(Icons.checklist_rtl, color: Colors.black,),
+              leading: Icon(Icons.checklist_rtl, color: Colors.white,),
               title: Text('Book requests',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
 
               },
             ),
             ListTile(
-              leading: Icon(Icons.info, color: Colors.black,),
+              leading: Icon(Icons.info, color: Colors.white,),
               title: Text('About app',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
 
               },
             ),
             ListTile(
-              leading: Icon(Icons.support_agent, color: Colors.black,),
+              leading: Icon(Icons.support_agent, color: Colors.white,),
               title: Text('Support',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: (){
 
               },
             ),
             ListTile(
-              leading: Icon(Icons.output, color: Colors.black,),
+              leading: Icon(Icons.output, color: Colors.white,),
               title: Text('Log out',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               onTap: () {
 
               },

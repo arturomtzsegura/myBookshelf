@@ -17,6 +17,7 @@ class UserReservationsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Accepted Reservations'),
+        backgroundColor: Colors.brown,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: getAcceptedReservations(),

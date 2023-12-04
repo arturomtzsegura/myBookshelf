@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mybookshelf/firstscr.dart';
-
 import 'home.dart';
 
 class login extends StatefulWidget {
@@ -18,9 +17,10 @@ class _loginState extends State<login> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -37,7 +37,6 @@ class _loginState extends State<login> {
                 fontSize: 40,
               ),
             ),
-
             SizedBox(
               height: size.height * 0.1,
             ),
@@ -57,6 +56,9 @@ class _loginState extends State<login> {
                     children: [
                       TextField(
                         decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           hintText: 'Type your email',
                         ),
                         controller: email,
@@ -66,6 +68,9 @@ class _loginState extends State<login> {
                       ),
                       TextField(
                         decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           hintText: 'Type your password',
                         ),
                         controller: password,
@@ -75,6 +80,14 @@ class _loginState extends State<login> {
                       ),
                       FittedBox(
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.white, // text color
+                            elevation: 0, // remove shadow
+                            shape: RoundedRectangleBorder( // rounded corners
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                           onPressed: () async {
                             final FirebaseAuth _auth = FirebaseAuth.instance;
                             if(email.text.isNotEmpty && password.text.isNotEmpty) {
@@ -101,7 +114,12 @@ class _loginState extends State<login> {
 
                             }
                           },
-                          child: const Text('Login'),
+                          child: const Text('Login',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ],

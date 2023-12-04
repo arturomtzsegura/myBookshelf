@@ -3,6 +3,9 @@ import 'package:firebase_storage/firebase_storage.dart'; // For File Upload To F
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // For Image Picker
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'home.dart';
+
 
 class BookUpload extends StatefulWidget {
   @override
@@ -18,10 +21,12 @@ class _BookUploadState extends State<BookUpload> {
   final TextEditingController titulo = TextEditingController();
   final TextEditingController descripcion = TextEditingController();
   final TextEditingController cantidad = TextEditingController();
+  Map<String, dynamic>? selectedLocation;
+  String? selectedLocationId;
+
 
   Future<void> uploadBook() async {
     late String imageUrl;
-
     if (_imageFile != null) {
       final Reference storageReference = FirebaseStorage.instance
           .ref()
@@ -34,18 +39,18 @@ class _BookUploadState extends State<BookUpload> {
         print(onError);
       });
     }
-
     return bookCollection
         .add({
       'title': title,
       'description': description,
       'quantity': quantity,
       'imageUrl': imageUrl,
+      'location': selectedLocation, // Include the selected location
     })
         .then((value) => print("Book Uploaded"))
         .catchError((error) => print("Failed to upload book: $error"));
-
   }
+
 
   Future getImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -61,13 +66,16 @@ class _BookUploadState extends State<BookUpload> {
 
   @override
   Widget build(BuildContext context) {
+    final CollectionReference locationsCollection = FirebaseFirestore.instance.collection('locations');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Upload Book'),
       ),
-      body: Column(
+      body: SingleChildScrollView(child: Column(
         children: <Widget>[
-          TextField(controller: titulo,
+          TextField(
+            controller: titulo,
             onChanged: (value) {
               setState(() {
                 title = titulo.text;
@@ -77,7 +85,8 @@ class _BookUploadState extends State<BookUpload> {
               hintText: "Enter Book Title",
             ),
           ),
-          TextField(controller: descripcion,
+          TextField(
+            controller: descripcion,
             onChanged: (value) {
               setState(() {
                 description = descripcion.text;
@@ -87,7 +96,8 @@ class _BookUploadState extends State<BookUpload> {
               hintText: "Enter Book Description",
             ),
           ),
-          TextField(controller: cantidad,
+          TextField(
+            controller: cantidad,
             onChanged: (value) {
               setState(() {
                 quantity = int.parse(cantidad.text);
@@ -97,20 +107,60 @@ class _BookUploadState extends State<BookUpload> {
               hintText: "Enter Quantity Available",
             ),
           ),
+          StreamBuilder<QuerySnapshot>(
+            stream: locationsCollection.snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text("Loading");
+              }
+
+              List<DropdownMenuItem> locationItems = snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                return DropdownMenuItem(
+                  value: document.id, // Use document ID as the value
+                  child: Text(data['name']),
+                );
+              }).toList();
+
+              return DropdownButton(
+                value: selectedLocationId, // Use selected location ID as the value
+                items: locationItems,
+                onChanged: (value) {
+                  setState(() {
+                    selectedLocationId = value;
+                    selectedLocation = snapshot.data!.docs.firstWhere((doc) => doc.id == value).data() as Map<String, dynamic>;
+                  });
+                },
+              );
+
+            },
+          ),
           ElevatedButton(
             onPressed: getImage,
             child: Text('Choose Image'),
           ),
           ElevatedButton(
             onPressed: (){
+              try{
                 uploadBook();
-                titulo.clear();
-                descripcion.clear();
-                cantidad.clear();
-              },
+              }catch(e){
+                print('The book could not be stored');
+              }
+              titulo.clear();
+              descripcion.clear();
+              cantidad.clear();
+              final snackBar = SnackBar(content: Text('The book has been stored'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const home()));
+            },
             child: Text('Upload Book'),
           ),
         ],
+      ),
       ),
     );
   }

@@ -21,7 +21,7 @@ class _register_scrState extends State<register_scr> {
 
     return Scaffold(
       appBar: AppBar(
-
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -57,20 +57,35 @@ class _register_scrState extends State<register_scr> {
                   child: Column(
                     children: [
                       TextField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           hintText: 'Type your email',
                         ),
                         controller: email,
                       ),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
                       TextField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           hintText: 'Create a password',
                         ),
                         controller: password,
                       ),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
                       TextField(
-                        decoration: const InputDecoration(
-                          hintText: 'Confirm your password',
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          hintText: 'Confirm the password',
                         ),
                         controller: rePass,
                       ),
@@ -79,6 +94,14 @@ class _register_scrState extends State<register_scr> {
                       ),
                       FittedBox(
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.brown,
+                            foregroundColor: Colors.white, // text color
+                            elevation: 0, // remove shadow
+                            shape: RoundedRectangleBorder( // rounded corners
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                           onPressed: () async {
                             final FirebaseAuth _auth = FirebaseAuth.instance;
                             if(email.text.isNotEmpty && password.text == rePass.text)
@@ -110,7 +133,12 @@ class _register_scrState extends State<register_scr> {
                             }
 
                           },
-                          child: const Text('Register'),
+                          child: const Text('Register',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ],

@@ -30,8 +30,10 @@ class ReservationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.brown,
       appBar: AppBar(
         title: Text('Pending Reservations'),
+        backgroundColor: Colors.brown,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: getReservationRequests(),
@@ -47,21 +49,23 @@ class ReservationsView extends StatelessWidget {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['title']),
-                subtitle: Text('Requested by ${data['userId']} at ${data['timestamp'].toDate()}'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    TextButton(
-                      child: Text('Accept'),
-                      onPressed: () => acceptReservationRequest(document.id),
-                    ),
-                    TextButton(
-                      child: Text('Reject'),
-                      onPressed: () => rejectReservationRequest(document.id),
-                    ),
-                  ],
+              return Card(
+                child: ListTile(
+                  title: Text(data['title']),
+                  subtitle: Text('Requested by ${data['userId']} at ${data['timestamp'].toDate()}'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextButton(
+                        child: Text('Accept', style: TextStyle(color: Colors.brown),),
+                        onPressed: () => acceptReservationRequest(document.id),
+                      ),
+                      TextButton(
+                        child: Text('Reject', style: TextStyle(color: Colors.brown)),
+                        onPressed: () => rejectReservationRequest(document.id),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }).toList(),
