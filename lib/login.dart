@@ -14,12 +14,18 @@ class _loginState extends State<login> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
 
+  bool _passwordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -72,7 +78,21 @@ class _loginState extends State<login> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           hintText: 'Type your password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                         ),
+                        obscureText: !_passwordVisible,
                         controller: password,
                       ),
                       SizedBox(
@@ -81,7 +101,7 @@ class _loginState extends State<login> {
                       FittedBox(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.black,
                             foregroundColor: Colors.white, // text color
                             elevation: 0, // remove shadow
                             shape: RoundedRectangleBorder( // rounded corners

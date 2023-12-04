@@ -18,6 +18,7 @@ class _supportState extends State<support> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown,
       appBar: AppBar(
         title: Text('Support'),
         backgroundColor: Colors.brown,
@@ -30,28 +31,35 @@ class _supportState extends State<support> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('You can call and get more information about your reserve here:',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                Card(
+                  elevation: 10,
+                  child: Column(
+                    children: [
+                      Text('You can call and get more information about your reserve here:',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
 
-                Text('\n'
-                    'mybookshelf@support.com\n'
-                    'support@gmail.com.mx \n'
-                    'support@mybookshelf.com\n',
-                  style: TextStyle(
-                    fontSize: 20,
+                      Text('\n'
+                          'mybookshelf@support.com\n'
+                          'support@gmail.com.mx \n'
+                          'support@mybookshelf.com\n',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text('\nTelephone: \n\n'
+                          '444 292 4828\n'
+                          '444 828 2049\n'
+                          '444 927 1934\n',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Text('\nTelephone: \n\n'
-                    '444 292 4828\n'
-                    '444 828 2049\n'
-                    '444 927 1934\n',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                )
               ],
             ),
           ),

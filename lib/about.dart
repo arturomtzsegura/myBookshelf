@@ -17,6 +17,7 @@ class _aboutState extends State<about> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown,
       appBar: AppBar(
         title: Text('About Mybookshelf'),
         backgroundColor: Colors.brown,
@@ -30,17 +31,20 @@ class _aboutState extends State<about> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('MyBookshelf is an app that can help you to reserve'
-                    ' a book in an available library from your city.\n '
-                    'Just tap a book and you can read a little description, see where the library '
-                    'is located and reserve the book in that place, so you can get to the library '
-                    'and just pick it up.\n\n'
-                    ''
-                    'Give it a try!',
-                  style: TextStyle(
-                    fontSize: 20,
+                Card(
+                  elevation: 10,
+                  child: Text('MyBookshelf is an app that can help you to reserve'
+                      ' a book in an available library from your city.\n '
+                      'Just tap a book and you can read a little description, see where the library '
+                      'is located and reserve the book in that place, so you can get to the library '
+                      'and just pick it up.\n\n'
+                      ''
+                      'Give it a try!',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           )

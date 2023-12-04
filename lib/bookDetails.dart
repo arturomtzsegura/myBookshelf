@@ -21,14 +21,19 @@ class BookDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final CollectionReference reservationCollection = FirebaseFirestore.instance.collection('reservations');
-    Future<void> requestBookReservation(String title) {
+
+    Future<void> requestBookReservation(String title, String imageUrl) async { // Add imageUrl parameter
       String userId = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get(); // Get the user document
+      String userEmail = userDoc.get('email'); // Get the user's email
       return reservationCollection
           .add({
         'title': title,
         'userId': userId,
+        'userEmail': userEmail, // Store the user's email
         'timestamp': DateTime.now(),
         'status': 'requested', // Add a status field
+        'imageUrl': imageUrl, // Store the imageUrl
       })
           .then((value) => print("Reservation Requested"))
           .catchError((error) => print("Failed to request reservation: $error"));
@@ -95,7 +100,7 @@ class BookDetailView extends StatelessWidget {
                           ),
                           onPressed: () {
                             try{
-                              requestBookReservation(data['title']);
+                              requestBookReservation(data['title'], data['imageUrl']);
                             }catch(e){
                               print('The book could not be stored');
                             }

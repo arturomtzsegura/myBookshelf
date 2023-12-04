@@ -14,15 +14,24 @@ class _register_scrState extends State<register_scr> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rePass = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,8 +82,22 @@ class _register_scrState extends State<register_scr> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Create a password',
+                          hintText: 'Type your password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                         ),
+                        obscureText: !_passwordVisible,
                         controller: password,
                       ),
                       SizedBox(
@@ -85,8 +108,22 @@ class _register_scrState extends State<register_scr> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Confirm the password',
+                          hintText: 'Confirm your password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on confirmPasswordVisible state choose the icon
+                              _confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of confirmPasswordVisible variable
+                              setState(() {
+                                _confirmPasswordVisible = !_confirmPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
+                        obscureText: !_confirmPasswordVisible,
                         controller: rePass,
                       ),
                       SizedBox(
@@ -95,8 +132,8 @@ class _register_scrState extends State<register_scr> {
                       FittedBox(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.brown,
-                            foregroundColor: Colors.white, // text color
+                            backgroundColor: Colors.black,
+                            foregroundColor: Colors.white,
                             elevation: 0, // remove shadow
                             shape: RoundedRectangleBorder( // rounded corners
                               borderRadius: BorderRadius.circular(10.0),
@@ -117,6 +154,7 @@ class _register_scrState extends State<register_scr> {
                                 if (user != null) {
                                   await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
                                       'email': user.email,
+                                      'role': 'user',
                                       // Add any other data you want to store for the user
                                     });
 

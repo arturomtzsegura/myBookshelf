@@ -71,6 +71,7 @@ class _BookUploadState extends State<BookUpload> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Upload Book'),
+        backgroundColor: Colors.brown,
       ),
       body: SingleChildScrollView(child: Column(
         children: <Widget>[
@@ -82,6 +83,9 @@ class _BookUploadState extends State<BookUpload> {
               });
             },
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               hintText: "Enter Book Title",
             ),
           ),
@@ -93,6 +97,9 @@ class _BookUploadState extends State<BookUpload> {
               });
             },
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               hintText: "Enter Book Description",
             ),
           ),
@@ -104,9 +111,13 @@ class _BookUploadState extends State<BookUpload> {
               });
             },
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               hintText: "Enter Quantity Available",
             ),
           ),
+          Text('Select the library'),
           StreamBuilder<QuerySnapshot>(
             stream: locationsCollection.snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -125,7 +136,6 @@ class _BookUploadState extends State<BookUpload> {
                   child: Text(data['name']),
                 );
               }).toList();
-
               return DropdownButton(
                 value: selectedLocationId, // Use selected location ID as the value
                 items: locationItems,
@@ -140,10 +150,26 @@ class _BookUploadState extends State<BookUpload> {
             },
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              elevation: 0, // remove shadow
+              shape: RoundedRectangleBorder( // rounded corners
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
             onPressed: getImage,
             child: Text('Choose Image'),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              elevation: 0, // remove shadow
+              shape: RoundedRectangleBorder( // rounded corners
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
             onPressed: (){
               try{
                 uploadBook();

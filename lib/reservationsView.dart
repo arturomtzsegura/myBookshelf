@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReservationsView extends StatelessWidget {
   final CollectionReference pendingReservationCollection = FirebaseFirestore.instance.collection('pendingReservations');
@@ -49,10 +50,12 @@ class ReservationsView extends StatelessWidget {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              DateTime timestamp = (data['timestamp'] as Timestamp).toDate(); // Get the timestamp
+              String formattedTimestamp = DateFormat('MM/dd/yyyy hh:mm a').format(timestamp); // Format the timestamp
               return Card(
                 child: ListTile(
                   title: Text(data['title']),
-                  subtitle: Text('Requested by ${data['userId']} at ${data['timestamp'].toDate()}'),
+                  subtitle: Text('Requested by ${data['userEmail']} at $formattedTimestamp'), // Show the formatted timestamp
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -70,6 +73,7 @@ class ReservationsView extends StatelessWidget {
               );
             }).toList(),
           );
+
         },
       )
     );
