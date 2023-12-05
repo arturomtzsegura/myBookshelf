@@ -131,12 +131,9 @@ class _register_scrState extends State<register_scr> {
                       FittedBox(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
-                            elevation: 0, // remove shadow
-                            shape: RoundedRectangleBorder( // rounded corners
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
+                            backgroundColor: Colors.deepOrangeAccent,
+                            foregroundColor: Colors.white, // text color
+                            elevation: 10, // remove shadow
                           ),
                           onPressed: () async {
                             final FirebaseAuth _auth = FirebaseAuth.instance;

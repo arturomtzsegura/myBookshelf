@@ -100,12 +100,9 @@ class _loginState extends State<login> {
                       FittedBox(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
+                            backgroundColor: Colors.deepOrangeAccent,
                             foregroundColor: Colors.white, // text color
-                            elevation: 0, // remove shadow
-                            shape: RoundedRectangleBorder( // rounded corners
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
+                            elevation: 10, // remove shadow
                           ),
                           onPressed: () async {
                             final FirebaseAuth _auth = FirebaseAuth.instance;

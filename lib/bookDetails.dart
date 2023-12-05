@@ -11,7 +11,7 @@ class BookDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final size = MediaQuery.of(context).size;
     final CollectionReference reservationCollection = FirebaseFirestore.instance.collection('reservations');
 
     Future<void> requestBookReservation(String title, String imageUrl) async { // Add imageUrl parameter
@@ -53,77 +53,95 @@ class BookDetailView extends StatelessWidget {
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 500,
-                      height: 500,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(data['imageUrl']),
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ),
-                    ),
+
                     FittedBox(
                         child: Card(
                           elevation: 10,
-                          color: Colors.brown,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder( // rounded corners
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: size.height * 0.05,
+                              ),
+                              Container(
+                                width: 500,
+                                height: 500,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(data['imageUrl']),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.05,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('${data['title']}', style: TextStyle(fontSize: 24, color: Colors.white)),
+                                  Text('${data['title']}', style: TextStyle(fontSize: 24, color: Colors.black)),
                                 ],
                               ),
 
-                              Text('${data['description']}', style: TextStyle(fontSize: 22, color: Colors.white)),
-                              Text('Disponible en:', style: TextStyle(fontSize: 24, color: Colors.white)),
-                              Text('$name', style: TextStyle(fontSize: 22, color: Colors.white)),
+                              Text('${data['description']}', style: TextStyle(fontSize: 22, color: Colors.black)),
+                              Text('Disponible en:', style: TextStyle(fontSize: 24, color: Colors.black)),
+                              Text('$name', style: TextStyle(fontSize: 22, color: Colors.black)),
+                              SizedBox(
+                                height: size.height * 0.03,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.deepOrangeAccent,
+                                      foregroundColor: Colors.white, // text color
+                                      elevation: 10, // remove shadow
+                                    ),
+                                    onPressed: () {
+                                      try{
+                                        requestBookReservation(data['title'], data['imageUrl']);
+                                      }catch(e){
+                                        print('The book could not be stored');
+                                      }
+                                      final snackBar = SnackBar(content: Text('Request reserve sent'));
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => home()));
+                                    },
+                                    child: const Text('Reserve', style: TextStyle(fontSize: 20, color: Colors.white)),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.deepOrangeAccent,
+                                      foregroundColor: Colors.white, // text color
+                                      elevation: 10, // remove shadow
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LocationView(
+                                            latitude: latitudeDouble,
+                                            longitude: longitudeDouble,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text('Ubicar biblioteca', style: TextStyle(fontSize: 20, color: Colors.white)),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            try{
-                              requestBookReservation(data['title'], data['imageUrl']);
-                            }catch(e){
-                              print('The book could not be stored');
-                            }
-                            final snackBar = SnackBar(content: Text('Request reserve sent'));
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => home()));
-                          },
-                          child: const Text('Reserve', style: TextStyle(fontSize: 20, color: Colors.brown)),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LocationView(
-                                  latitude: latitudeDouble,
-                                  longitude: longitudeDouble,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text('Ubicar biblioteca', style: TextStyle(fontSize: 20, color: Colors.brown)),
-                        ),
-                      ],
-                    ),
+
                   ],
                 ),
             ],

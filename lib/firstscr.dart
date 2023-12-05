@@ -47,12 +47,10 @@ class _homeState extends State<firstscr> {
                             FittedBox(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.brown, // text color
-                                  elevation: 0, // remove shadow
-                                  shape: RoundedRectangleBorder( // rounded corners
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
+                                  backgroundColor: Colors.deepOrangeAccent,
+                                  foregroundColor: Colors.white, // text color
+                                  elevation: 10, // remove shadow
+
                                 ),
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const login()));
@@ -75,12 +73,10 @@ class _homeState extends State<firstscr> {
                             FittedBox(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.brown, // text color
-                                  elevation: 0, // remove shadow
-                                  shape: RoundedRectangleBorder( // rounded corners
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
+                                  backgroundColor: Colors.deepOrangeAccent,
+                                  foregroundColor: Colors.white, ////// text color
+                                  elevation: 10, // remove shadow
+
                                 ),
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const register_scr()));

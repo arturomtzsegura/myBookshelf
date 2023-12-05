@@ -98,7 +98,7 @@ class _homeState extends State<home> {
               children: [
                 DrawerHeader(
                     decoration: BoxDecoration(
-                      color: Colors.brown,
+                      color: Colors.white,
                     ),
                     child: Row(
                       children: [
@@ -106,7 +106,7 @@ class _homeState extends State<home> {
                           onPressed: (){
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.person, color: Colors.white, size: 50,),
+                          icon: Icon(Icons.person, color: Colors.brown, size: 50,),
                         ),
                       ],
                     )
